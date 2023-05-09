@@ -1,32 +1,29 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using RiverTransportAutoschedule.Domain.Repository.Abstractions;
 using RiverTransportAutoschedule.Models;
 using System.Diagnostics;
 
-namespace RiverTransportAutoschedule.Controllers
+namespace RiverTransportAutoschedule.Controllers;
+
+[Authorize]
+public class HomeController : Controller
 {
-    public class HomeController : Controller
+    private readonly IRiverTransportRepository _transportRepository;
+
+    public HomeController(IRiverTransportRepository transportRepository)
     {
-        private readonly ILogger<HomeController> _logger;
+        _transportRepository = transportRepository;
+    }
 
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
+    public IActionResult Index()
+    {
+        return View(_transportRepository.GetAllRiverTransportsAsync());
+    }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public IActionResult Error()
+    {
+        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }
