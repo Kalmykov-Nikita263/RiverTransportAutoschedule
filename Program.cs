@@ -4,6 +4,7 @@ using RiverTransportAutoschedule.Domain;
 using RiverTransportAutoschedule.Domain.Entities;
 using RiverTransportAutoschedule.Domain.Repository.Abstractions;
 using RiverTransportAutoschedule.Domain.Repository.EntityFramework;
+using RiverTransportAutoschedule.Infrastructure;
 
 namespace RiverTransportAutoschedule;
 
@@ -17,11 +18,12 @@ public class Program
         builder.Services.AddTransient<IScheduleRepository, EFScheduleRepository>();
         builder.Services.AddTransient<IRiverPortRepository, EFRiverPortRepository>();
         builder.Services.AddTransient<DataManager>();
+        builder.Services.AddTransient<ScheduleGenerator>();
 
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
         {
             options.UseLazyLoadingProxies()
-                .UseSqlite(builder.Configuration.GetConnectionString("SqliteDefaultConnection"));
+                .UseSqlServer(builder.Configuration.GetConnectionString("SqlServerDefaultConnection"));
         });
 
         builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -41,11 +43,9 @@ public class Program
 
         var app = builder.Build();
 
-        // Configure the HTTP request pipeline.
         if (!app.Environment.IsDevelopment())
         {
             app.UseExceptionHandler("/Home/Error");
-            // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
             app.UseHsts();
         }
 

@@ -1,0 +1,41 @@
+﻿@model IAsyncEnumerable<Schedule>
+@{
+    ViewData["Title"] = "Расписание";
+}
+
+<h1>Расписание</h1>
+
+<form method="post" asp-controller="Schedule" asp-action="ExportSchedule">
+    <div class="input-group">
+        <button class="btn btn-warning w-10" type="submit">Экспорт расписания</button>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Маршрут</th>
+            <th>Время отправления</th>
+            <th>Время прибытия</th>
+            <th>Название судна</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        @await foreach (var item in Model.OrderBy(x => x.DepartureTime))
+        {
+            <tr>
+                <td>@item.RiverTransport.Route</td>
+                <td>@item.DepartureTime.ToString("dd.MM.yyyy HH:mm")</td>
+                <td>@item.ArrivalTime.ToString("dd.MM.yyyy HH:mm")</td>
+                <td>@item.RiverTransport.Name</td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="Schedule" asp-action="Edit" asp-route-id="@item.ScheduleId">Изменить</a>
+                    <a class="btn btn-danger" asp-controller="Schedule" asp-action="Delete" asp-route-id="@item.ScheduleId">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<button class="btn btn-primary w-100" type="submit" onclick="window.location.href='/Schedule/GenerateSchedule'">Сгенерировать расписание</button>

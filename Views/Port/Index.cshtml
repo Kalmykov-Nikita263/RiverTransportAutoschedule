@@ -1,0 +1,33 @@
+﻿@model IAsyncEnumerable<RiverPort>
+@{
+    ViewData["Title"] = "Речные порты";
+}
+
+<h1>Список речных портов</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Название</th>
+            <th>Местоположение</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        @await foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.RiverPortId</td>
+                <td>@item.Name</td>
+                <td>@item.Location</td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="Port" asp-action="Edit" asp-route-id="@item.RiverPortId">Изменить</a>
+                    <a class="btn btn-danger" asp-controller="Port" asp-action="Delete" asp-route-id="@item.RiverPortId">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<button class="btn btn-primary w-100" type="submit" onclick="window.location.href='/Port/Create'">Добавить речной порт</button>

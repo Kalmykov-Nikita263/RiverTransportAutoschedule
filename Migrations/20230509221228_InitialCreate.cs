@@ -17,10 +17,10 @@ namespace RiverTransportAutoschedule.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
-                    NormalizedName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "TEXT", nullable: true)
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -31,21 +31,21 @@ namespace RiverTransportAutoschedule.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "TEXT", nullable: false),
-                    UserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
-                    Email = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "INTEGER", nullable: false),
-                    PasswordHash = table.Column<string>(type: "TEXT", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "TEXT", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "TEXT", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "TEXT", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "INTEGER", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "INTEGER", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "TEXT", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "INTEGER", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -56,9 +56,9 @@ namespace RiverTransportAutoschedule.Migrations
                 name: "RiverPorts",
                 columns: table => new
                 {
-                    RiverPortId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: true),
-                    Location = table.Column<string>(type: "TEXT", nullable: true)
+                    RiverPortId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Location = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -69,11 +69,11 @@ namespace RiverTransportAutoschedule.Migrations
                 name: "RiverTransports",
                 columns: table => new
                 {
-                    RiverTransportId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: true),
-                    TransportType = table.Column<int>(type: "INTEGER", nullable: false),
-                    Route = table.Column<string>(type: "TEXT", nullable: true),
-                    Capacity = table.Column<int>(type: "INTEGER", nullable: false)
+                    RiverTransportId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TransportType = table.Column<int>(type: "int", nullable: false),
+                    Route = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Capacity = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -84,11 +84,11 @@ namespace RiverTransportAutoschedule.Migrations
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    RoleId = table.Column<string>(type: "TEXT", nullable: false),
-                    ClaimType = table.Column<string>(type: "TEXT", nullable: true),
-                    ClaimValue = table.Column<string>(type: "TEXT", nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -105,11 +105,11 @@ namespace RiverTransportAutoschedule.Migrations
                 name: "AspNetUserClaims",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    UserId = table.Column<string>(type: "TEXT", nullable: false),
-                    ClaimType = table.Column<string>(type: "TEXT", nullable: true),
-                    ClaimValue = table.Column<string>(type: "TEXT", nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -126,10 +126,10 @@ namespace RiverTransportAutoschedule.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "TEXT", nullable: false),
-                    ProviderKey = table.Column<string>(type: "TEXT", nullable: false),
-                    ProviderDisplayName = table.Column<string>(type: "TEXT", nullable: true),
-                    UserId = table.Column<string>(type: "TEXT", nullable: false)
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -146,8 +146,8 @@ namespace RiverTransportAutoschedule.Migrations
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "TEXT", nullable: false),
-                    RoleId = table.Column<string>(type: "TEXT", nullable: false)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -170,10 +170,10 @@ namespace RiverTransportAutoschedule.Migrations
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "TEXT", nullable: false),
-                    LoginProvider = table.Column<string>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Value = table.Column<string>(type: "TEXT", nullable: true)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -190,11 +190,11 @@ namespace RiverTransportAutoschedule.Migrations
                 name: "Schedules",
                 columns: table => new
                 {
-                    ScheduleId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    DepartureTime = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    ArrivalTime = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    RiverTransportId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    RiverPortId = table.Column<Guid>(type: "TEXT", nullable: false)
+                    ScheduleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DepartureTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ArrivalTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    RiverTransportId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RiverPortId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -227,9 +227,19 @@ namespace RiverTransportAutoschedule.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "AA11B246-CB97-4E1F-B632-AE8F9AFC4660", 0, "86cb4f24-1d47-42c2-aab5-dd70e3127c16", "RiverTransportCompany@gmail.com", true, false, null, "RIVERTRANSPORTCOMPANY@GMAIL.COM", "ADMIN", "AQAAAAIAAYagAAAAEBNm+vBCLY4G3eVaTkO/Ssa3dIIwJsQ/ZtRTUXOARJJqhXtzuNlrRaVLhtMXsgjwMQ==", null, false, "", false, "admin" },
-                    { "EBFA32C4-032F-4733-843D-E90F50EEC75B", 0, "07c22da1-d200-40c7-ae35-823ce41c737d", "User123Test@gmail.com", true, false, null, "USER123TEST@GMAIL.COM", "USER", "AQAAAAIAAYagAAAAENNcLH4vWMMF8RhsQD3NXTaD8CDg7nfB0Bh+ZW1CSh5iPbrkWgHmyT74bqyuYWCn/g==", null, false, "", false, "user" }
+                    { "AA11B246-CB97-4E1F-B632-AE8F9AFC4660", 0, "d85aa2c6-a494-4788-8382-f169957ad440", "RiverTransportCompany@gmail.com", true, false, null, "RIVERTRANSPORTCOMPANY@GMAIL.COM", "ADMIN", "AQAAAAIAAYagAAAAEDt9NsauSff4Q075gfaKVeMeRIGv/f59JLVJ21KL7WVwOJpihlbbDQ07VIZbXRP3bQ==", null, false, "", false, "admin" },
+                    { "EBFA32C4-032F-4733-843D-E90F50EEC75B", 0, "73bf0ff7-dd38-4447-a72c-a21145c1d348", "User123Test@gmail.com", true, false, null, "USER123TEST@GMAIL.COM", "USER", "AQAAAAIAAYagAAAAENjNqZS6+O0e9UZkoTS9rWibG1vUZwvu/vwB/UeIOjay2CjzTeGbF2l2oxbbQzd3/Q==", null, false, "", false, "user" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "RiverPorts",
+                columns: new[] { "RiverPortId", "Location", "Name" },
+                values: new object[] { new Guid("b51ece33-f9ba-4bd8-949c-c619fcaf55b4"), "г. Тольятти, ул. Коммунистическая 96", "Тольяттинский речной порт" });
+
+            migrationBuilder.InsertData(
+                table: "RiverTransports",
+                columns: new[] { "RiverTransportId", "Capacity", "Name", "Route", "TransportType" },
+                values: new object[] { new Guid("bb4dc5ac-c22d-435a-9e28-f8b64dcda5c0"), 150, "Титаник-230", "Самара-Тольятти", 1 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
@@ -240,6 +250,11 @@ namespace RiverTransportAutoschedule.Migrations
                     { "70246A84-AFB1-409A-AEF2-6D020ECD9276", "EBFA32C4-032F-4733-843D-E90F50EEC75B" }
                 });
 
+            migrationBuilder.InsertData(
+                table: "Schedules",
+                columns: new[] { "ScheduleId", "ArrivalTime", "DepartureTime", "RiverPortId", "RiverTransportId" },
+                values: new object[] { new Guid("73a3b6da-7614-4b46-bb78-8cd5f8af6121"), new DateTime(2023, 4, 22, 21, 30, 0, 0, DateTimeKind.Unspecified), new DateTime(2023, 4, 22, 19, 0, 0, 0, DateTimeKind.Unspecified), new Guid("b51ece33-f9ba-4bd8-949c-c619fcaf55b4"), new Guid("bb4dc5ac-c22d-435a-9e28-f8b64dcda5c0") });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -249,7 +264,8 @@ namespace RiverTransportAutoschedule.Migrations
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
                 column: "NormalizedName",
-                unique: true);
+                unique: true,
+                filter: "[NormalizedName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
@@ -275,7 +291,8 @@ namespace RiverTransportAutoschedule.Migrations
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
-                unique: true);
+                unique: true,
+                filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Schedules_RiverPortId",

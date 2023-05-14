@@ -1,0 +1,47 @@
+﻿@model WeatherConditions
+
+@{
+ViewData["Title"] = "Создание расписания";
+}
+
+<div class="container">
+    <h1>Создание</h1>
+    <form asp-controller="Schedule" asp-action="GenerateSchedule" method="post" class="form-horizontal">
+        <div class="form-group">
+            <div asp-validation-summary="All"></div>
+            <label class="col-sm-2 control-label">Температура воздуха</label>
+            <div class="col-sm-10">
+                <input type="text" asp-for="AirTemperature" class="form-control" placeholder="Температура воздуха">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Скорость ветра</label>
+            <div class="col-sm-10">
+                <input type="text" asp-for="WindSpeed" class="form-control" placeholder="Скорость ветра">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Тип погоды</label>
+            <div class="col-sm-10">
+                <select asp-for="WeatherType" asp-items="Html.GetEnumSelectList<WeatherType>()" class="form-control">
+                    <option value="" selected>Выберите тип погоды</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Регион</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" placeholder="Регион">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+            </div>
+        </div>
+    </form>
+</div>

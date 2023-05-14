@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using RiverTransportAutoschedule.Domain.Repository.Abstractions;
+using RiverTransportAutoschedule.Domain;
 using RiverTransportAutoschedule.Models;
 using System.Diagnostics;
 
@@ -9,16 +9,16 @@ namespace RiverTransportAutoschedule.Controllers;
 [Authorize]
 public class HomeController : Controller
 {
-    private readonly IRiverTransportRepository _transportRepository;
+    private readonly DataManager _dataManager;
 
-    public HomeController(IRiverTransportRepository transportRepository)
+    public HomeController(DataManager dataManager)
     {
-        _transportRepository = transportRepository;
+        _dataManager = dataManager;
     }
 
     public IActionResult Index()
     {
-        return View(_transportRepository.GetAllRiverTransportsAsync());
+        return View(_dataManager.Schedules.GetAllSchedulesAsync());
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

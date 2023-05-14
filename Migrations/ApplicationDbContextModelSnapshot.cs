@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RiverTransportAutoschedule.Domain;
 
@@ -19,30 +20,34 @@ namespace RiverTransportAutoschedule.Migrations
                 .HasAnnotation("ProductVersion", "7.0.5")
                 .HasAnnotation("Proxies:ChangeTracking", false)
                 .HasAnnotation("Proxies:CheckEquality", false)
-                .HasAnnotation("Proxies:LazyLoading", true);
+                .HasAnnotation("Proxies:LazyLoading", true)
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasMaxLength(256)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedName")
                         .HasMaxLength(256)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasDatabaseName("RoleNameIndex");
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
 
@@ -65,17 +70,19 @@ namespace RiverTransportAutoschedule.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RoleId")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -88,17 +95,19 @@ namespace RiverTransportAutoschedule.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -110,17 +119,17 @@ namespace RiverTransportAutoschedule.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -132,10 +141,10 @@ namespace RiverTransportAutoschedule.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("RoleId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -159,16 +168,16 @@ namespace RiverTransportAutoschedule.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
@@ -178,54 +187,54 @@ namespace RiverTransportAutoschedule.Migrations
             modelBuilder.Entity("RiverTransportAutoschedule.Domain.Entities.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("AccessFailedCount")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("bit");
 
                     b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("bit");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("PasswordHash")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("bit");
 
                     b.Property<string>("SecurityStamp")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("bit");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
@@ -234,7 +243,8 @@ namespace RiverTransportAutoschedule.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasDatabaseName("UserNameIndex");
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
 
@@ -243,13 +253,13 @@ namespace RiverTransportAutoschedule.Migrations
                         {
                             Id = "AA11B246-CB97-4E1F-B632-AE8F9AFC4660",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "86cb4f24-1d47-42c2-aab5-dd70e3127c16",
+                            ConcurrencyStamp = "d85aa2c6-a494-4788-8382-f169957ad440",
                             Email = "RiverTransportCompany@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "RIVERTRANSPORTCOMPANY@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEBNm+vBCLY4G3eVaTkO/Ssa3dIIwJsQ/ZtRTUXOARJJqhXtzuNlrRaVLhtMXsgjwMQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDt9NsauSff4Q075gfaKVeMeRIGv/f59JLVJ21KL7WVwOJpihlbbDQ07VIZbXRP3bQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -259,13 +269,13 @@ namespace RiverTransportAutoschedule.Migrations
                         {
                             Id = "EBFA32C4-032F-4733-843D-E90F50EEC75B",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "07c22da1-d200-40c7-ae35-823ce41c737d",
+                            ConcurrencyStamp = "73bf0ff7-dd38-4447-a72c-a21145c1d348",
                             Email = "User123Test@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "USER123TEST@GMAIL.COM",
                             NormalizedUserName = "USER",
-                            PasswordHash = "AQAAAAIAAYagAAAAENNcLH4vWMMF8RhsQD3NXTaD8CDg7nfB0Bh+ZW1CSh5iPbrkWgHmyT74bqyuYWCn/g==",
+                            PasswordHash = "AQAAAAIAAYagAAAAENjNqZS6+O0e9UZkoTS9rWibG1vUZwvu/vwB/UeIOjay2CjzTeGbF2l2oxbbQzd3/Q==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -277,59 +287,77 @@ namespace RiverTransportAutoschedule.Migrations
                 {
                     b.Property<Guid>("RiverPortId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Location")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("RiverPortId");
 
                     b.ToTable("RiverPorts");
+
+                    b.HasData(
+                        new
+                        {
+                            RiverPortId = new Guid("b51ece33-f9ba-4bd8-949c-c619fcaf55b4"),
+                            Location = "г. Тольятти, ул. Коммунистическая 96",
+                            Name = "Тольяттинский речной порт"
+                        });
                 });
 
             modelBuilder.Entity("RiverTransportAutoschedule.Domain.Entities.RiverTransport", b =>
                 {
                     b.Property<Guid>("RiverTransportId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Capacity")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Route")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("TransportType")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.HasKey("RiverTransportId");
 
                     b.ToTable("RiverTransports");
+
+                    b.HasData(
+                        new
+                        {
+                            RiverTransportId = new Guid("bb4dc5ac-c22d-435a-9e28-f8b64dcda5c0"),
+                            Capacity = 150,
+                            Name = "Титаник-230",
+                            Route = "Самара-Тольятти",
+                            TransportType = 1
+                        });
                 });
 
             modelBuilder.Entity("RiverTransportAutoschedule.Domain.Entities.Schedule", b =>
                 {
                     b.Property<Guid>("ScheduleId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("ArrivalTime")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DepartureTime")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("datetime2");
 
                     b.Property<Guid>("RiverPortId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("RiverTransportId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ScheduleId");
 
@@ -338,6 +366,16 @@ namespace RiverTransportAutoschedule.Migrations
                     b.HasIndex("RiverTransportId");
 
                     b.ToTable("Schedules");
+
+                    b.HasData(
+                        new
+                        {
+                            ScheduleId = new Guid("73a3b6da-7614-4b46-bb78-8cd5f8af6121"),
+                            ArrivalTime = new DateTime(2023, 4, 22, 21, 30, 0, 0, DateTimeKind.Unspecified),
+                            DepartureTime = new DateTime(2023, 4, 22, 19, 0, 0, 0, DateTimeKind.Unspecified),
+                            RiverPortId = new Guid("b51ece33-f9ba-4bd8-949c-c619fcaf55b4"),
+                            RiverTransportId = new Guid("bb4dc5ac-c22d-435a-9e28-f8b64dcda5c0")
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

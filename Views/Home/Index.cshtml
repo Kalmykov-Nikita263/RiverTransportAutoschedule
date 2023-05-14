@@ -1,23 +1,28 @@
-﻿@model IAsyncEnumerable<RiverTransport>
+﻿@model IAsyncEnumerable<Schedule>
 @{
-    ViewData["Title"] = "Главная страница";
+    ViewData["Title"] = "Главная";
 }
 
-<h1>Добро пожаловать в River Schedule</h1>
+<h1>Расписание</h1>
 
-<p>На этом сайте вы можете создавать и управлять расписаниями речного транспорта.</p>
-
-<h2>Доступный речной транспорт</h2>
-<ul>
-    @await foreach (var transport in Model)
-    {
-        <li>@transport.Name</li>
-    }
-</ul>
-
-<h2>Навигация</h2>
-<ul>
-    <li><a asp-controller="Home" asp-action="Error">К речным транспортным средствам</a></li>
-    <li><a asp-controller="RiverPort" asp-action="Index">К речным портам</a></li>
-    <li><a asp-controller="Schedule" asp-action="Index">К расписанию</a></li>
-</ul>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Маршрут</th>
+            <th>Время отправления</th>
+            <th>Время прибытия</th>
+            <th>Название судна</th>
+        </tr>
+    </thead>
+    <tbody>
+        @await foreach (var item in Model.OrderBy(x => x.DepartureTime))
+        {
+            <tr>
+                <td>@item.RiverTransport.Route</td>
+                <td>@item.DepartureTime.ToString("dd.MM.yyyy HH:mm")</td>
+                <td>@item.ArrivalTime.ToString("dd.MM.yyyy HH:mm")</td>
+                <td>@item.RiverTransport.Name</td>
+            </tr>
+        }
+    </tbody>
+</table>

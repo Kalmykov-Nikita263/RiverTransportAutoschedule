@@ -1,0 +1,47 @@
+﻿@model Schedule
+
+@{
+    ViewData["Title"] = "Редактирование";
+}
+
+<div class="container">
+    <h1>Редактирование</h1>
+    <form asp-controller="Port" asp-action="Edit" method="post" class="form-horizontal">
+        <div class="form-group">
+            <div asp-validation-summary="All"></div>
+            <input type="hidden" asp-for="ScheduleId" />
+
+            <label class="col-sm-2 control-label">Маршрут</label>
+            <div class="col-sm-10">
+                <input type="text" asp-for="RiverTransport.Route" class="form-control" value="@Model.RiverTransport.Route">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Время отправления</label>
+            <div class="col-sm-10">
+                <input type="datetime-local" asp-for="DepartureTime" class="form-control" value="@Model.DepartureTime">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Время прибытия</label>
+            <div class="col-sm-10">
+                <input type="datetime-local" asp-for="ArrivalTime" class="form-control" value="@Model.ArrivalTime">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Название судна</label>
+            <div class="col-sm-10">
+                <input type="text" asp-for="RiverTransport.Name" class="form-control" value="@Model.RiverTransport.Name">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+            </div>
+        </div>
+    </form>
+</div>

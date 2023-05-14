@@ -4,16 +4,16 @@ namespace RiverTransportAutoschedule.Domain;
 
 public class DataManager
 {
-    public IRiverTransportRepository RiverTransport { get; set; }
+    public IRiverTransportRepository Transports { get; set; }
 
-    public IScheduleRepository ScheduleRepository { get; set; }
+    public IScheduleRepository Schedules { get; set; }
 
-    public IRiverPortRepository RiverPortRepository { get; set; }
+    public IRiverPortRepository Ports{ get; set; }
 
     public DataManager(IRiverTransportRepository riverTransport, IScheduleRepository scheduleRepository, IRiverPortRepository riverPortRepository)
     {
-        RiverTransport = riverTransport;
-        ScheduleRepository = scheduleRepository;
-        RiverPortRepository = riverPortRepository;
+        Transports = riverTransport;
+        Schedules = scheduleRepository;
+        Ports = riverPortRepository;
     }
 }

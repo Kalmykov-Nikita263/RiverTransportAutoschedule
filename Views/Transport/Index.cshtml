@@ -1,0 +1,43 @@
+﻿@model IAsyncEnumerable<RiverTransport>
+@{
+    ViewData["Title"] = "Речные судна";
+    Dictionary<string, string> transportTypeTranslations = new()
+    {
+        {"Passenger", "Пассажирское"},
+        {"Cargo", "Грузовое"},
+        {"Barge", "Баржа"}
+    };
+}
+
+<h1>Список речных судов</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Название</th>
+            <th>Тип судна</th>
+            <th>Маршрут</th>
+            <th>Вместимость</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        @await foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.RiverTransportId</td>
+                <td>@item.Name</td>
+                <td>@transportTypeTranslations[item.TransportType.ToString()]</td>
+                <td>@item.Route</td>
+                <td>@item.Capacity</td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="Transport" asp-action="Edit" asp-route-id="@item.RiverTransportId">Изменить</a>
+                    <a class="btn btn-danger" asp-controller="Transport" asp-action="Delete" asp-route-id="@item.RiverTransportId">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<button class="btn btn-primary w-100" type="submit" onclick="window.location.href='/Transport/Create'">Добавить речное судно</button>
